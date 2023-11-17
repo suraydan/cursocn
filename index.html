@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>todo sample course</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Outfit;
+        }
+
+        .container {
+            background-color: #303443;
+            /* background-color: rgb(94, 19, 30); */
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .content {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem
+        }
+
+        .titleHost {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .input {
+            border: none;
+            padding: 0.45rem 1rem;
+            border-radius: 0.25rem;
+        }
+
+        .btn-send {
+            border: none;
+            background-color: transparent;
+        }
+
+        #listToDo>span {
+            color: white;
+            font-size: 0.875rem;
+            font-weight: 300;
+        }
+
+        #listToDo>strong {
+            color: white;
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        #listToDo {
+            margin-top: 1rem;
+            gap: 0.25rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+
+            width: 16rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <p class="titleHost">O host esta rodando em: <span id="host"></span></p>
+        <div class="content">
+            <input type="text" id="todo" class="input" placeholder="Adicione um To Do" />
+            <button onclick="handleInsertToDo()" class="btn-send"><i class="ph-fill ph-plus-square"
+                    style="color:#0886FD;font-size: 2.125rem;cursor: pointer;"></i></button>
+        </div>
+        <div id="listToDo">
+
+        </div>
+    </div>
+    </div>
+
+    <script>
+
+        function getOS() {
+
+            fetch('/os').then(data => data.json()).then(result => {
+                document.getElementById("host").innerText = result;
+            })
+        }
+
+        function handleGetListToDo() {
+            fetch('/todo').then(data => data.json()).then(result => {
+                const el = document.getElementById("listToDo")
+                if (result.length > 0) {
+                    let listMap = "<strong>Sua Lista</strong>";
+                    result.map(item => {
+                        listMap += `<span id="${item.id}">${item.todo} </span>`
+                    })
+                    el.innerHTML = listMap
+                }
+            })
+        }
+
+        function handleInsertToDo() {
+            const el = document.getElementById("todo")
+            console.log(el.value)
+            fetch('/todo', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ todo: el.value })
+            }).then(() => {
+                handleGetListToDo()
+            })
+            el.value = ""
+        }
+
+        handleGetListToDo()
+        getOS()
+    </script>
+</body>
+
+</html>

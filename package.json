@@ -1,0 +1,14 @@
+{
+  "name": "sampletodoapi",
+  "version": "1.0.0",
+  "description": "Sua aplicação Node.js com Express e MySQL",
+  "author": "mmaximiliano",
+  "main": "server.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql2": "^3.6.3"
+  }
+}
