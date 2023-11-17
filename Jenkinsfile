@@ -27,5 +27,13 @@ pipeline {
                 }
             }
         }
+
+        stage ("Deploy Kubernetes") {
+            steps {
+                withKubeConfig([credentialsId: 'kubeconfig']) {
+                    sh "kubectl set image deployment/web web=matheusmprado/sampletodojenkins:${env.BUILD_ID}"
+                }
+            }
+        }
     }
 }
