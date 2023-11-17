@@ -5,7 +5,7 @@ pipeline {
         stage ('Build Image') {
             steps {
                 script {
-                    dockerapp = docker.build("matheusmprado/api-produto:${env.BUILD_ID}", '-f ./src/Dockerfile ./src')
+                    dockerapp = docker.build("matheusmprado/sampletodojenkins:${env.BUILD_ID}", '-f ./dockerfile .')
                 }
             }
         }
