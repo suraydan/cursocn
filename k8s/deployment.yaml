@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: web
-          image: suraydan/cursocn:latest
+          image: suraydan/cursocna3:latest
           ports:
             - containerPort: 3000
           env:
