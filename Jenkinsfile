@@ -5,7 +5,7 @@ pipeline {
         stage ('Build Image') {
             steps {
                     script {
-                        dockerapp = docker.build("suraydan/cursocnA3:v${env.BUILD_ID}", '-f ./Dockerfile .')
+                        dockerapp = docker.build("suraydan/cursocna3:v${env.BUILD_ID}", '-f ./Dockerfile .')
                     }
             }
         }
